@@ -570,7 +570,7 @@ public class GameManager :MonoSingleton<GameManager>
         if (index >= 20)
         {
             Debug.Log("答题结束");
-            if (score >= 9)
+            if (score >= 4)
             {
                 //下一关
                 Panel3.SetActive(false);
