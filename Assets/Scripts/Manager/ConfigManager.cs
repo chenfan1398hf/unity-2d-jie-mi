@@ -24,3 +24,13 @@ public class ConfigManager
     //    return mLanguageCfg.Find((item) => item.key == key);
     //}
 }
+
+public class TiMuInfo
+{
+    public string timu;
+    public string daan1;
+    public string daan2;
+    public string daan3;
+    public string daan4;
+    public int zhengQueDaAn = 0;
+}

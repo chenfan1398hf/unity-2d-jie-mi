@@ -41,6 +41,14 @@ public class player : MonoBehaviour
         {
             GameManager.instance.OpenMiMaPanel();
         }
+        if (collision.gameObject.tag == "zhangyu")
+        {
+            GameManager.instance.OpenPanel2();
+        }
+        if (collision.gameObject.tag == "shuimu")
+        {
+            GameManager.instance.OpenPanel3();
+        }
     }
 
 }

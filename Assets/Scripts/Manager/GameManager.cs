@@ -332,6 +332,8 @@ public class GameManager :MonoSingleton<GameManager>
     }
     public List<GameObject> maps = new List<GameObject>();
     public GameObject mimaPanel;
+    public GameObject Panel2;
+    public GameObject Panel3;
     public Text mimaText;
     private string mimaStr = "";
     public void InitPanel()
@@ -342,6 +344,9 @@ public class GameManager :MonoSingleton<GameManager>
         }
         maps[0].SetActive(true);
         mimaPanel.SetActive(false);
+        Panel2.SetActive(false);
+        Panel3.SetActive(false);
+        InitTiMu();
     }
     //打开密码界面
     public void OpenMiMaPanel()
@@ -373,4 +378,171 @@ public class GameManager :MonoSingleton<GameManager>
             maps[1].SetActive(true);
         }
     }
+    //打开章鱼对话界面
+    public void OpenPanel2()
+    {
+        Panel2.SetActive(true);
+    }
+    //前往海洋图书馆
+    public void GoToTuShuGuan()
+    {
+        Panel2.SetActive(false);
+        maps[1].SetActive(false);
+        maps[2].SetActive(true);
+    }
+    //打开水母对话界面
+    public void OpenPanel3()
+    {
+        Panel3.SetActive(true);
+    }
+    public List<TiMuInfo> tiMuInfoList = new List<TiMuInfo>();
+    public void InitTiMu()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            TiMuInfo info = new TiMuInfo();
+            tiMuInfoList.Add(info);
+        }
+        tiMuInfoList[0].timu = "What is the largest ocean in the world?";
+        tiMuInfoList[0].daan1 = "A. Atlantic Ocean";
+        tiMuInfoList[0].daan2 = "B. Indian Ocean";
+        tiMuInfoList[0].daan3 = "C. Pacific Ocean";
+        tiMuInfoList[0].daan4 = "D. Arctic Ocean";
+        tiMuInfoList[0].zhengQueDaAn = 3;
+
+        tiMuInfoList[1].timu = "What organisms primarily make up coral reefs?";
+        tiMuInfoList[1].daan1 = "A. Seaweed";
+        tiMuInfoList[1].daan2 = "B. Coral polyps";
+        tiMuInfoList[1].daan3 = "C. Shells";
+        tiMuInfoList[1].daan4 = "D. Mollusks";
+        tiMuInfoList[1].zhengQueDaAn = 2;
+
+        tiMuInfoList[2].timu = "How do dolphins communicate?";
+        tiMuInfoList[2].daan1 = "A. Low-frequency sounds";
+        tiMuInfoList[2].daan2 = "B. Color changes";
+        tiMuInfoList[2].daan3 = "C. Echolocation";
+        tiMuInfoList[2].daan4 = "D. Vibrations";
+        tiMuInfoList[2].zhengQueDaAn = 3;
+
+        tiMuInfoList[3].timu = "What is the deepest ocean trench in the world?";
+        tiMuInfoList[3].daan1 = "A. Constantine Trench";
+        tiMuInfoList[3].daan2 = "B. Peru-Chile Trench";
+        tiMuInfoList[3].daan3 = "C. Mariana Trench";
+        tiMuInfoList[3].daan4 = "D. Tonga Trench";
+        tiMuInfoList[3].zhengQueDaAn = 3;
+
+        tiMuInfoList[4].timu = "Which whale is the largest animal in the world?";
+        tiMuInfoList[4].daan1 = "A. Sperm whale";
+        tiMuInfoList[4].daan2 = "B. Blue whale";
+        tiMuInfoList[4].daan3 = "C. Orca";
+        tiMuInfoList[4].daan4 = "D. Humpback whale";
+        tiMuInfoList[4].zhengQueDaAn = 2;
+
+        tiMuInfoList[5].timu = "What is the primary cause of tides?";
+        tiMuInfoList[5].daan1 = "A. Wind force";
+        tiMuInfoList[5].daan2 = "B. The gravitational pull of the moon";
+        tiMuInfoList[5].daan3 = "C. Earthquakes";
+        tiMuInfoList[5].daan4 = "D. Ocean currents";
+        tiMuInfoList[5].zhengQueDaAn = 2;
+
+        tiMuInfoList[6].timu = "Which sea has the highest salinity in the ocean?";
+        tiMuInfoList[6].daan1 = "A. Mediterranean Sea";
+        tiMuInfoList[6].daan2 = "B. Red Sea";
+        tiMuInfoList[6].daan3 = "C. Baltic Sea";
+        tiMuInfoList[6].daan4 = "D. Black Sea";
+        tiMuInfoList[6].zhengQueDaAn = 2;
+
+        tiMuInfoList[7].timu = "What type of fish do sharks belong to?";
+        tiMuInfoList[7].daan1 = "A. Cartilaginous fish";
+        tiMuInfoList[7].daan2 = "B. Bony fish";
+        tiMuInfoList[7].daan3 = "C. Crustaceans";
+        tiMuInfoList[7].daan4 = "D. Mollusks";
+        tiMuInfoList[7].zhengQueDaAn = 1;
+
+        tiMuInfoList[8].timu = "What is the main cause of coral bleaching?";
+        tiMuInfoList[8].daan1 = "A. Rising sea temperatures";
+        tiMuInfoList[8].daan2 = "B. Typhoons";
+        tiMuInfoList[8].daan3 = "C. Decrease in shark population";
+        tiMuInfoList[8].daan4 = "D. Deep-sea pressure";
+        tiMuInfoList[8].zhengQueDaAn = 1;
+
+        tiMuInfoList[9].timu = "What is the most abundant organism in the ocean?";
+        tiMuInfoList[9].daan1 = "A. Fish";
+        tiMuInfoList[9].daan2 = "B. Crustaceans";
+        tiMuInfoList[9].daan3 = "C. Phytoplankton";
+        tiMuInfoList[9].daan4 = "D. Octopus";
+        tiMuInfoList[9].zhengQueDaAn = 3;
+
+        tiMuInfoList[10].timu = "Where do sea turtles usually lay their eggs?";
+        tiMuInfoList[10].daan1 = "A. Sandy beaches";
+        tiMuInfoList[10].daan2 = "B. Seafloor";
+        tiMuInfoList[10].daan3 = "C. Seaweed beds";
+        tiMuInfoList[10].daan4 = "D. Coral reefs";
+        tiMuInfoList[10].zhengQueDaAn = 1;
+
+        tiMuInfoList[11].timu = "How do jellyfish catch their prey?";
+        tiMuInfoList[11].daan1 = "A. Teeth";
+        tiMuInfoList[11].daan2 = "B. Suction cups";
+        tiMuInfoList[11].daan3 = "C. Stinging cells on their tentacles";
+        tiMuInfoList[11].daan4 = "D. Mouthparts";
+        tiMuInfoList[11].zhengQueDaAn = 3;
+
+        tiMuInfoList[12].timu = "What is the largest living coral reef in the world?";
+        tiMuInfoList[12].daan1 = "A. Red Sea Reef";
+        tiMuInfoList[12].daan2 = "B. The Great Barrier Reef";
+        tiMuInfoList[12].daan3 = "C. Maldives Coral Reef";
+        tiMuInfoList[12].daan4 = "D. Galapagos Coral Reef";
+        tiMuInfoList[12].zhengQueDaAn = 2;
+
+        tiMuInfoList[13].timu = "What percentage of Earth's surface is covered by oceans?";
+        tiMuInfoList[13].daan1 = "A. 50%";
+        tiMuInfoList[13].daan2 = "B. 60%";
+        tiMuInfoList[13].daan3 = "C. 71%";
+        tiMuInfoList[13].daan4 = "D. 80%";
+        tiMuInfoList[13].zhengQueDaAn = 3;
+
+        tiMuInfoList[14].timu = "Which ocean animal can protect itself by releasing ink?";
+        tiMuInfoList[14].daan1 = "A. Octopus";
+        tiMuInfoList[14].daan2 = "B. Dolphin";
+        tiMuInfoList[14].daan3 = "C. Shark";
+        tiMuInfoList[14].daan4 = "D. Whale";
+        tiMuInfoList[14].zhengQueDaAn = 1;
+
+        tiMuInfoList[15].timu = "Which fish can fly above the water surface?";
+        tiMuInfoList[15].daan1 = "A. Tuna";
+        tiMuInfoList[15].daan2 = "B. Flying fish";
+        tiMuInfoList[15].daan3 = "C. Flounder";
+        tiMuInfoList[15].daan4 = "D. Shark";
+        tiMuInfoList[15].zhengQueDaAn = 2;
+
+        tiMuInfoList[16].timu = "Which ocean animal is known as the unicorn of the sea?";
+        tiMuInfoList[16].daan1 = "A. Blue whale";
+        tiMuInfoList[16].daan2 = "B. Narwhal";
+        tiMuInfoList[16].daan3 = "C. Sperm whale";
+        tiMuInfoList[16].daan4 = "D. Orca";
+        tiMuInfoList[16].zhengQueDaAn = 2;
+
+
+        tiMuInfoList[17].timu = "What is a red tide?";
+        tiMuInfoList[17].daan1 = "A. A large ocean wave";
+        tiMuInfoList[17].daan2 = "B. A harmful algal bloom";
+        tiMuInfoList[17].daan3 = "C. A deep-sea current";
+        tiMuInfoList[17].daan4 = "D. A shark migration phenomenon";
+        tiMuInfoList[17].zhengQueDaAn = 2;
+
+        tiMuInfoList[18].timu = "Which ocean animal has the strongest bite force?";
+        tiMuInfoList[18].daan1 = "A. Crocodile";
+        tiMuInfoList[18].daan2 = "B. Orca";
+        tiMuInfoList[18].daan3 = "C. Great white shark";
+        tiMuInfoList[18].daan4 = "D. Sperm whale";
+        tiMuInfoList[18].zhengQueDaAn = 3;
+
+        tiMuInfoList[19].timu = "What organ do starfish use to eat?";
+        tiMuInfoList[19].daan1 = "A. Stomach";
+        tiMuInfoList[19].daan2 = "B. Mouth";
+        tiMuInfoList[19].daan3 = "C. Tentacles";
+        tiMuInfoList[19].daan4 = "D. Gills";
+        tiMuInfoList[19].zhengQueDaAn = 1;
+    }
 }
+
