@@ -51,6 +51,7 @@ public class GameManager :MonoSingleton<GameManager>
     private void Start()
     {
         this.InvokeRepeating("CheckTime", 0, 0.1f);
+        InitPanel();
     }
 
     void CheckTime()
@@ -328,5 +329,48 @@ public class GameManager :MonoSingleton<GameManager>
             }
         }
         return allGameObjects.ToArray();
+    }
+    public List<GameObject> maps = new List<GameObject>();
+    public GameObject mimaPanel;
+    public Text mimaText;
+    private string mimaStr = "";
+    public void InitPanel()
+    {
+        foreach (var item in maps)
+        {
+            item.SetActive(false);
+        }
+        maps[0].SetActive(true);
+        mimaPanel.SetActive(false);
+    }
+    //打开密码界面
+    public void OpenMiMaPanel()
+    {
+        mimaPanel.SetActive(true);
+        mimaText.text = "";
+    }
+    //重置密码
+    public void CzMiMa()
+    {
+        mimaText.text = "";
+        mimaStr = "";
+    }
+    //输入密码
+    public void ShuRuMiMa(int _number)
+    {
+        mimaStr += _number.ToString();
+        mimaText.text = mimaStr;
+        CheckMiMa();
+    }
+    //检查密码
+    public void CheckMiMa()
+    {
+        if (mimaStr == "734")
+        {
+            //切换场景
+            mimaPanel.SetActive(false);
+            maps[0].SetActive(false);
+            maps[1].SetActive(true);
+        }
     }
 }
