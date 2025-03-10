@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using Spine.Unity;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GameManager :MonoSingleton<GameManager>
 {
@@ -61,7 +62,8 @@ public class GameManager :MonoSingleton<GameManager>
 
         if (TimeNumber % 10 == 0)
         {
-       
+            CountDown1();
+            CountDown2();
         }
         if (TimeNumber % 20 == 0)
         {
@@ -335,8 +337,11 @@ public class GameManager :MonoSingleton<GameManager>
     public GameObject mimaPanel;
     public GameObject Panel2;
     public GameObject Panel3;
+    public GameObject Panel5;
+    public GameObject PanelBegin;
     public Text mimaText;
     private string mimaStr = "";
+    private int mimaNumber = 0;
     public void InitPanel()
     {
         foreach (var item in maps)
@@ -348,6 +353,8 @@ public class GameManager :MonoSingleton<GameManager>
         Panel2.SetActive(false);
         Panel3.SetActive(false);
         ptPanelObj.SetActive(false);
+        PanelBegin.SetActive(true);
+        Panel5.SetActive(false);
         InitTiMu();
     }
     //打开密码界面
@@ -365,6 +372,7 @@ public class GameManager :MonoSingleton<GameManager>
     //输入密码
     public void ShuRuMiMa(int _number)
     {
+        mimaNumber++;
         mimaStr += _number.ToString();
         mimaText.text = mimaStr;
         CheckMiMa();
@@ -372,18 +380,49 @@ public class GameManager :MonoSingleton<GameManager>
     //检查密码
     public void CheckMiMa()
     {
-        if (mimaStr == "734")
+        if (mimaStr == "571")
         {
             //切换场景
             mimaPanel.SetActive(false);
             maps[0].SetActive(false);
             maps[1].SetActive(true);
+            return;
+        }
+        if (mimaNumber >= 3)
+        {
+            mimaNumber = 0;
+            CzMiMa();
+            ShowMsg("The password is incorrect.");
         }
     }
     //打开章鱼对话界面
+    private int duihuaNumber = 1;
     public void OpenPanel2()
     {
         Panel2.SetActive(true);
+        Panel2.transform.Find("Image1").gameObject.SetActive(false);
+        Panel2.transform.Find("Image2").gameObject.SetActive(false);
+        Panel2.transform.Find("Image3").gameObject.SetActive(false);
+        Panel2.transform.Find("Image4").gameObject.SetActive(false);
+        Panel2.transform.Find("Image"+ duihuaNumber).gameObject.SetActive(true);
+    }
+    public void DuiHua()
+    {
+        duihuaNumber++;
+        Panel2.transform.Find("Image1").gameObject.SetActive(false);
+        Panel2.transform.Find("Image2").gameObject.SetActive(false);
+        Panel2.transform.Find("Image3").gameObject.SetActive(false);
+        Panel2.transform.Find("Image4").gameObject.SetActive(false);
+        if (duihuaNumber > 4)
+        {
+            GoToTuShuGuan();
+        }
+        else
+        {
+            Panel2.transform.Find("Image" + duihuaNumber).gameObject.SetActive(true);
+        }
+      
+
     }
     //前往海洋图书馆
     public void GoToTuShuGuan()
@@ -397,6 +436,7 @@ public class GameManager :MonoSingleton<GameManager>
     {
         Panel3.SetActive(true);
         GetTiMu();
+        countDown1 = 300;
     }
     public List<TiMuInfo> tiMuInfoList = new List<TiMuInfo>();
     public void InitTiMu()
@@ -595,9 +635,9 @@ public class GameManager :MonoSingleton<GameManager>
     private int regNumber = 0;
     public void BeginPingTuGame()
     {
-        
-         ptPanelObj.SetActive(true);
-         InitPt();
+        ptPanelObj.SetActive(true);
+        InitPt();
+        countDown2 = 300;
     }
     //初始化拼图数据
     public void InitPt()
@@ -631,7 +671,7 @@ public class GameManager :MonoSingleton<GameManager>
             {
                 //完成拼图
                 ptPanelObj.SetActive(false);
-                
+                Panel5.SetActive(true);
             }
         }
         return isWithinRange;
@@ -644,6 +684,44 @@ public class GameManager :MonoSingleton<GameManager>
         Debug.Log(distance);
         // 判断距离是否小于阈值
         return distance < threshold;
+    }
+
+    public GameObject panelMsg;
+    public void ShowMsg(string _msg)
+    {
+        StartCoroutine(ShowMsgIE(_msg));
+    }
+    public IEnumerator ShowMsgIE(string _msg)
+    {
+        panelMsg.SetActive(true);
+        panelMsg.transform.Find("Text (Legacy)").GetComponent<Text>().text = _msg;
+        yield return new WaitForSeconds(1f);
+        panelMsg.SetActive(false);
+    }
+    //答题倒计时
+    public Text down1;
+    public Text down2;
+    private int countDown1 = 300;
+    private int countDown2 = 300;
+    public void CountDown1()
+    {
+        countDown1--;
+        down1.text = countDown1.ToString();
+    }
+    public void CountDown2()
+    {
+        countDown2--;
+        down2.text = countDown2.ToString();
+    }
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        // 在 Unity 编辑器中停止播放
+        EditorApplication.isPlaying = false;
+#else
+        // 在独立构建版本中退出游戏
+        Application.Quit();
+#endif
     }
 }
 
