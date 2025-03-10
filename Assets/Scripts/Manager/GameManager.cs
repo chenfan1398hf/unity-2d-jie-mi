@@ -394,6 +394,7 @@ public class GameManager :MonoSingleton<GameManager>
     public void OpenPanel3()
     {
         Panel3.SetActive(true);
+        GetTiMu();
     }
     public List<TiMuInfo> tiMuInfoList = new List<TiMuInfo>();
     public void InitTiMu()
@@ -543,6 +544,32 @@ public class GameManager :MonoSingleton<GameManager>
         tiMuInfoList[19].daan3 = "C. Tentacles";
         tiMuInfoList[19].daan4 = "D. Gills";
         tiMuInfoList[19].zhengQueDaAn = 1;
+    }
+    //初始化题目
+    private int index = 0;
+    private int score = 0;
+    public void GetTiMu()
+    {
+        Panel3.transform.Find("Text").GetComponent<Text>().text = tiMuInfoList[index].timu;
+        Panel3.transform.Find("Button1/Text (Legacy)").GetComponent<Text>().text = tiMuInfoList[index].daan1;
+        Panel3.transform.Find("Button2/Text (Legacy)").GetComponent<Text>().text = tiMuInfoList[index].daan2;
+        Panel3.transform.Find("Button3/Text (Legacy)").GetComponent<Text>().text = tiMuInfoList[index].daan3;
+        Panel3.transform.Find("Button4/Text (Legacy)").GetComponent<Text>().text = tiMuInfoList[index].daan4;
+    }
+    //答题
+    public void SetDaAn(int _number)
+    {
+        if (_number == tiMuInfoList[index].zhengQueDaAn)
+        {
+            score++;
+        }
+        index++;
+        if (index >= 20)
+        {
+            Debug.Log("答题结束");
+            return;
+        }
+        GetTiMu();
     }
 }
 
