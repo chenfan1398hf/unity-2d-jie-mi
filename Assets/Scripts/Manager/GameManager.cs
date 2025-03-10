@@ -52,6 +52,7 @@ public class GameManager :MonoSingleton<GameManager>
     {
         this.InvokeRepeating("CheckTime", 0, 0.1f);
         InitPanel();
+        //BeginPingTuGame();
     }
 
     void CheckTime()
@@ -346,6 +347,7 @@ public class GameManager :MonoSingleton<GameManager>
         mimaPanel.SetActive(false);
         Panel2.SetActive(false);
         Panel3.SetActive(false);
+        ptPanelObj.SetActive(false);
         InitTiMu();
     }
     //打开密码界面
@@ -562,14 +564,86 @@ public class GameManager :MonoSingleton<GameManager>
         if (_number == tiMuInfoList[index].zhengQueDaAn)
         {
             score++;
+            Panel3.transform.Find("Score").GetComponent<Text>().text = score.ToString();
         }
         index++;
         if (index >= 20)
         {
             Debug.Log("答题结束");
+            if (score >= 9)
+            {
+                //下一关
+                Panel3.SetActive(false);
+                maps[2].SetActive(false);
+                maps[3].SetActive(true);
+                BeginPingTuGame();
+            }
+            else
+            {
+                score = 0;
+                index = 0;
+                GetTiMu();
+            }
             return;
         }
         GetTiMu();
+    }
+
+    //拼图游戏
+    private Sprite[] spriteArray;
+    public GameObject ptPanelObj;
+    private int regNumber = 0;
+    public void BeginPingTuGame()
+    {
+        
+         ptPanelObj.SetActive(true);
+         InitPt();
+    }
+    //初始化拼图数据
+    public void InitPt()
+    {
+        //初始化拼图碎片
+        spriteArray = null;
+        spriteArray = Resources.LoadAll<Sprite>("Tex/1234");
+        for (int i = 0; i < spriteArray.Length; i++)
+        {
+            var image = ptPanelObj.transform.Find("list/Image" + i).GetComponent<Image>();
+            image.sprite = spriteArray[i];
+            var obj = AddPrefab("Card", ptPanelObj.transform);
+            int randX = Util.randomInt(-800, 100);
+            int randY = Util.randomInt(-300, 300);
+            obj.GetComponent<card>().InitCard(i, new Vector2(randX, randY));
+            obj.GetComponent<Image>().sprite = spriteArray[i];
+        }
+
+    }
+    //检查位置是否OK
+    public bool CheckCardVec(int _id, Vector3 _vec3)
+    {
+        GameObject obj = ptPanelObj.transform.Find("list/Image" + _id).gameObject;
+        // 检查两个位置是否在指定范围内
+        bool isWithinRange = IsWithinDistance(obj.transform.position, _vec3, 50f);
+        if (isWithinRange)
+        {
+            obj.SetActive(true);
+            regNumber++;
+            if (regNumber >= spriteArray.Length)
+            {
+                //完成拼图
+                ptPanelObj.SetActive(false);
+                
+            }
+        }
+        return isWithinRange;
+    }
+    // 计算两个Vector3位置之间的距离，并判断是否在指定范围内
+    bool IsWithinDistance(Vector3 position1, Vector3 position2, float threshold)
+    {
+        // 计算两个位置之间的距离
+        float distance = Vector3.Distance(position1, position2);
+        Debug.Log(distance);
+        // 判断距离是否小于阈值
+        return distance < threshold;
     }
 }
 
