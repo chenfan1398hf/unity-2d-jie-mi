@@ -27,7 +27,7 @@ public class GameManager :MonoSingleton<GameManager>
 
     public static int TI_LI_MAX_NUMBER = 100;
     public static int TI_LI_CD_NUMBER = 600;
-
+    public MusicManager  musicManager = null;
     #endregion
 
     private void Update()
@@ -54,6 +54,8 @@ public class GameManager :MonoSingleton<GameManager>
         this.InvokeRepeating("CheckTime", 0, 0.1f);
         InitPanel();
         //BeginPingTuGame();
+        musicManager = new MusicManager();
+        MusicManager.GetInstance().PlayBkMusic("场景13");
     }
 
     void CheckTime()
@@ -386,6 +388,8 @@ public class GameManager :MonoSingleton<GameManager>
             mimaPanel.SetActive(false);
             maps[0].SetActive(false);
             maps[1].SetActive(true);
+            MusicManager.GetInstance().PlayBkMusic("场景2");
+            MusicManager.GetInstance().PlaySound("密码输入正确");
             return;
         }
         if (mimaNumber >= 3)
@@ -393,6 +397,7 @@ public class GameManager :MonoSingleton<GameManager>
             mimaNumber = 0;
             CzMiMa();
             ShowMsg("The password is incorrect.");
+            MusicManager.GetInstance().PlaySound("错误音效");
         }
     }
     //打开章鱼对话界面
@@ -430,6 +435,7 @@ public class GameManager :MonoSingleton<GameManager>
         Panel2.SetActive(false);
         maps[1].SetActive(false);
         maps[2].SetActive(true);
+        MusicManager.GetInstance().PlayBkMusic("场景13");
     }
     //打开水母对话界面
     public void OpenPanel3()
@@ -605,6 +611,7 @@ public class GameManager :MonoSingleton<GameManager>
         {
             score++;
             Panel3.transform.Find("Score").GetComponent<Text>().text = score.ToString();
+            MusicManager.GetInstance().PlaySound("题目回答正确");
         }
         index++;
         if (index >= 20)
@@ -617,6 +624,7 @@ public class GameManager :MonoSingleton<GameManager>
                 maps[2].SetActive(false);
                 maps[3].SetActive(true);
                 BeginPingTuGame();
+                MusicManager.GetInstance().PlayBkMusic("场景4");
             }
             else
             {
@@ -672,6 +680,7 @@ public class GameManager :MonoSingleton<GameManager>
                 //完成拼图
                 ptPanelObj.SetActive(false);
                 Panel5.SetActive(true);
+                MusicManager.GetInstance().PlaySound("拼图成功");
             }
         }
         return isWithinRange;
